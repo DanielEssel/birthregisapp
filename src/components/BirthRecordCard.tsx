@@ -1,5 +1,8 @@
 import React from 'react';
-import { Calendar, MapPin, User, Phone, FileText, Clock, CheckCircle, AlertCircle, Eye, Edit3, Download, Printer } from 'lucide-react';
+import { 
+  Calendar, MapPin, User, Phone, FileText, Clock, 
+  CheckCircle, AlertCircle, Eye, Edit3, Download, Printer 
+} from 'lucide-react';
 import { BirthRecord } from '../types';
 import { getStatusColor, getStatusText, getWorkflowSteps } from '../data/mockData';
 
@@ -23,11 +26,10 @@ export default function BirthRecordCard({
   onIssue 
 }: BirthRecordCardProps) {
   const steps = getWorkflowSteps(userRole);
-  
+
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'issued':
-        return <CheckCircle className="w-5 h-5 text-green-500" />;
       case 'approved':
         return <CheckCircle className="w-5 h-5 text-green-500" />;
       case 'verified':
@@ -44,9 +46,8 @@ export default function BirthRecordCard({
   };
 
   const renderActions = () => {
-    const actions = [];
+    const actions: JSX.Element[] = [];
 
-    // Common view action
     if (onView) {
       actions.push(
         <button
@@ -60,7 +61,6 @@ export default function BirthRecordCard({
       );
     }
 
-    // Role-specific actions
     switch (userRole) {
       case 'parent':
         if (record.status === 'draft' && onEdit) {
@@ -68,7 +68,7 @@ export default function BirthRecordCard({
             <button
               key="edit"
               onClick={() => onEdit(record)}
-              className="bg-blue-100 hover:bg-blue-200 text-blue-800 px-3 py-1 rounded text-sm font-medium transition-colors flex items-center space-x-1"
+              className="bg-blue-100 hover:bg-blue-200 text-blue-800 px-3 py-1 rounded text-sm font-medium flex items-center space-x-1 transition-colors"
             >
               <Edit3 className="w-3 h-3" />
               <span>Edit</span>
@@ -79,7 +79,7 @@ export default function BirthRecordCard({
           actions.push(
             <button
               key="download"
-              className="bg-green-100 hover:bg-green-200 text-green-800 px-3 py-1 rounded text-sm font-medium transition-colors flex items-center space-x-1"
+              className="bg-green-100 hover:bg-green-200 text-green-800 px-3 py-1 rounded text-sm font-medium flex items-center space-x-1 transition-colors"
             >
               <Download className="w-3 h-3" />
               <span>Download</span>
@@ -119,7 +119,7 @@ export default function BirthRecordCard({
             <button
               key="issue"
               onClick={() => onIssue(record)}
-              className="bg-purple-100 hover:bg-purple-200 text-purple-800 px-3 py-1 rounded text-sm font-medium transition-colors flex items-center space-x-1"
+              className="bg-purple-100 hover:bg-purple-200 text-purple-800 px-3 py-1 rounded text-sm font-medium flex items-center space-x-1 transition-colors"
             >
               <Printer className="w-3 h-3" />
               <span>Issue Certificate</span>
@@ -133,18 +133,21 @@ export default function BirthRecordCard({
   };
 
   return (
-    <div className="bg-white rounded-xl p-6 shadow-sm border hover:shadow-md transition-shadow">
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between">
+    <div className="bg-white rounded-xl p-5 sm:p-6 shadow-sm border hover:shadow-md transition-shadow">
+      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
         <div className="flex-1">
+          {/* Header */}
           <div className="flex items-start justify-between mb-4">
             <div>
               <h3 className="text-lg font-semibold text-gray-900 mb-1">{record.childName}</h3>
-              <div className="flex items-center space-x-4 text-sm text-gray-500">
-                <div className="flex items-center space-x-1">
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-gray-500">
+                <div className="flex items-center gap-1">
                   <Calendar className="w-4 h-4" />
-                  <span>Born: {new Date(record.dateOfBirth).toLocaleDateString()} at {record.timeOfBirth}</span>
+                  <span>
+                    Born: {new Date(record.dateOfBirth).toLocaleDateString()} at {record.timeOfBirth}
+                  </span>
                 </div>
-                <div className="flex items-center space-x-1">
+                <div className="flex items-center gap-1">
                   <MapPin className="w-4 h-4" />
                   <span>{record.placeOfBirth}</span>
                 </div>
@@ -161,21 +164,21 @@ export default function BirthRecordCard({
             </span>
           </div>
 
-          {/* Parent Information */}
+          {/* Parents */}
           <div className="mb-4 text-sm text-gray-600">
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-1">
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+              <div className="flex items-center gap-1">
                 <User className="w-4 h-4" />
                 <span>Parents: {record.motherName} & {record.fatherName}</span>
               </div>
-              <div className="flex items-center space-x-1">
+              <div className="flex items-center gap-1">
                 <Phone className="w-4 h-4" />
                 <span>{record.contactPhone}</span>
               </div>
             </div>
           </div>
 
-          {/* Progress Bar */}
+          {/* Progress */}
           <div className="mb-4">
             <div className="flex justify-between items-center mb-2">
               <span className="text-sm font-medium text-gray-700">Registration Progress</span>
@@ -185,13 +188,13 @@ export default function BirthRecordCard({
               <div
                 className="bg-blue-600 h-2 rounded-full transition-all duration-500"
                 style={{ width: `${record.progress}%` }}
-              ></div>
+              />
             </div>
             <div className="flex justify-between mt-2 text-xs text-gray-500">
-              {steps.map((step, index) => (
+              {steps.map((step) => (
                 <span
                   key={step.id}
-                  className={`${record.currentStep >= step.id ? 'text-blue-600 font-medium' : ''}`}
+                  className={record.currentStep >= step.id ? 'text-blue-600 font-medium' : ''}
                 >
                   {step.title}
                 </span>
@@ -199,23 +202,19 @@ export default function BirthRecordCard({
             </div>
           </div>
 
-          {/* Additional Information */}
-          <div className="flex items-center justify-between">
-            <div className="text-sm text-gray-500">
-              <div className="flex items-center space-x-4">
-                <span>Submitted: {record.submittedDate ? new Date(record.submittedDate).toLocaleDateString() : 'Not submitted'}</span>
-                <span>Documents: {record.documents.length}</span>
-                {record.attendingPhysician && (
-                  <span>Physician: {record.attendingPhysician}</span>
-                )}
-              </div>
+          {/* Extra Info + Actions */}
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <div className="text-sm text-gray-500 flex flex-wrap gap-x-4 gap-y-1">
+              <span>
+                Submitted: {record.submittedDate ? new Date(record.submittedDate).toLocaleDateString() : 'Not submitted'}
+              </span>
+              <span>Documents: {record.documents.length}</span>
+              {record.attendingPhysician && <span>Physician: {record.attendingPhysician}</span>}
             </div>
-            <div className="flex items-center space-x-3">
-              {renderActions()}
-            </div>
+            <div className="flex flex-wrap gap-2">{renderActions()}</div>
           </div>
 
-          {/* Notes or Rejection Reason */}
+          {/* Notes */}
           {(record.notes || record.rejectionReason) && (
             <div className="mt-4 p-3 bg-gray-50 rounded-lg">
               <p className="text-sm text-gray-700">

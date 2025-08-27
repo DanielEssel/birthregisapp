@@ -210,7 +210,7 @@ export default function ParentDashboard() {
         {/* Birth Records */}
         <div className="space-y-4">
           <h2 className="text-xl font-bold text-gray-900">
-            dren's Birth Records
+            Children's Birth Records
           </h2>
 
           {filteredRecords.length === 0 ? (
@@ -226,11 +226,11 @@ export default function ParentDashboard() {
               </p>
             </div>
           ) : (
-            <div className="grid gap-6">
+            <div className="grid grid-cols-1 gap-6">
               {filteredRecords.map((record) => (
                 <div
                   key={record.id}
-                  className="bg-white rounded-xl p-6 shadow-sm border hover:shadow-md transition-shadow"
+                  className="bg-white rounded-xl p-4 sm:p-5 md:p-6 shadow-sm border hover:shadow-md transition-shadow"
                 >
                   <div className="flex flex-col lg:flex-row lg:items-center justify-between">
                     <div className="flex-1">
@@ -357,26 +357,29 @@ export default function ParentDashboard() {
                             <span>Physician: {record.attendingPhysician}</span>
                           </div>
                         </div>
-                        <div className="flex items-center space-x-3">
+                        <div className="flex flex-wrap items-center gap-2">
+                          {/* View Details */}
                           <button
                             onClick={() => setSelectedRecord(record)}
-                            className="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center space-x-1"
+                            className="flex items-center gap-1 text-sm font-medium text-blue-600 hover:text-blue-800 transition-colors"
                           >
                             <Eye className="w-4 h-4" />
                             <span>View Details</span>
                           </button>
 
+                          {/* QR Code */}
                           {record.qrCode && (
-                            <button className="bg-purple-100 hover:bg-purple-200 text-purple-800 px-3 py-1 rounded text-sm font-medium transition-colors flex items-center space-x-1">
-                              <QrCode className="w-3 h-3" />
+                            <button className="flex items-center gap-1 rounded-md bg-purple-100 px-3 py-1 text-sm font-medium text-purple-800 hover:bg-purple-200 transition-colors">
+                              <QrCode className="w-4 h-4" />
                               <span>QR Code</span>
                             </button>
                           )}
 
+                          {/* Download Certificate */}
                           {record.status === "completed" && (
-                            <button className="bg-green-100 hover:bg-green-200 text-green-800 px-3 py-1 rounded text-sm font-medium transition-colors flex items-center space-x-1">
-                              <Download className="w-3 h-3" />
-                              <span>Download Certificate</span>
+                            <button className="flex items-center gap-1 rounded px-3 py-1 text-sm font-medium text-green-700 bg-green-100 hover:bg-green-200 transition-colors">
+                              <Download className="w-4 h-4" />
+                              <span>Download</span>
                             </button>
                           )}
                         </div>

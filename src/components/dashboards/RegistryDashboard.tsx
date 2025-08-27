@@ -67,13 +67,13 @@ export default function RegistryDashboard() {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'completed':
-        return <CheckCircle className="w-5 h-5 text-green-500" />;
+        return <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-green-500" />;
       case 'pending_approval':
-        return <Clock className="w-5 h-5 text-orange-500" />;
+        return <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-orange-500" />;
       case 'issued':
-        return <FileText className="w-5 h-5 text-blue-500" />;
+        return <FileText className="w-4 h-4 sm:w-5 sm:h-5 text-blue-500" />;
       default:
-        return <FileText className="w-5 h-5 text-gray-400" />;
+        return <FileText className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" />;
     }
   };
 
@@ -132,165 +132,165 @@ export default function RegistryDashboard() {
 
   return (
     <Layout title="Registry Dashboard" subtitle="Manage birth registrations and certificates">
-      <div className="space-y-8">
+      <div className=" space-y-6 sm:space-y-8">
         {/* Welcome Section */}
-        <div className="bg-gradient-to-r from-green-600 to-blue-600 rounded-2xl p-6 text-white">
-          <div className="flex items-center justify-between">
+        <div className="bg-gradient-to-r from-green-600 to-blue-600 rounded-lg sm:rounded-2xl p-4 sm:p-6 text-white">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-bold mb-2">Welcome, Rosa!</h1>
-              <p className="text-green-100">Manage birth registrations and issue certificates</p>
+              <h1 className="text-xl sm:text-2xl font-bold mb-1 sm:mb-2">Welcome, Rosa!</h1>
+              <p className="text-green-100 text-sm sm:text-base">Manage birth registrations and issue certificates</p>
             </div>
-            <div className="text-right">
-              <p className="text-sm text-green-100">Manila Civil Registry Office</p>
-              <p className="text-lg font-semibold">District 1</p>
+            <div className="text-left sm:text-right">
+              <p className="text-xs sm:text-sm text-green-100">Manila Civil Registry Office</p>
+              <p className="text-base sm:text-lg font-semibold">District 1</p>
             </div>
           </div>
         </div>
 
         {/* Analytics Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="bg-white rounded-xl p-6 shadow-sm border">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-2xl font-bold text-gray-900">{analyticsData.totalRegistrations.toLocaleString()}</p>
-                <p className="text-sm text-gray-500">Total Registrations</p>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
+          <div className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-sm border">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between">
+              <div className="min-w-0">
+                <p className="text-lg sm:text-2xl font-bold text-gray-900 truncate">{analyticsData.totalRegistrations.toLocaleString()}</p>
+                <p className="text-xs sm:text-sm text-gray-500">Total Registrations</p>
               </div>
-              <div className="p-3 bg-blue-100 rounded-lg">
-                <FileText className="w-6 h-6 text-blue-600" />
+              <div className="p-2 sm:p-3 bg-blue-100 rounded-lg mt-2 sm:mt-0 w-fit">
+                <FileText className="w-4 h-4 sm:w-6 sm:h-6 text-blue-600" />
               </div>
             </div>
-            <div className="mt-4 flex items-center text-sm">
-              <TrendingUp className="w-4 h-4 text-green-500 mr-1" />
+            <div className="mt-3 sm:mt-4 flex items-center text-xs sm:text-sm">
+              <TrendingUp className="w-3 h-3 sm:w-4 sm:h-4 text-green-500 mr-1" />
               <span className="text-green-600 font-medium">+{analyticsData.monthlyGrowth}%</span>
-              <span className="text-gray-500 ml-1">this month</span>
+              <span className="text-gray-500 ml-1 hidden sm:inline">this month</span>
             </div>
           </div>
 
-          <div className="bg-white rounded-xl p-6 shadow-sm border">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-2xl font-bold text-gray-900">{analyticsData.completedToday}</p>
-                <p className="text-sm text-gray-500">Completed Today</p>
+          <div className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-sm border">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between">
+              <div className="min-w-0">
+                <p className="text-lg sm:text-2xl font-bold text-gray-900">{analyticsData.completedToday}</p>
+                <p className="text-xs sm:text-sm text-gray-500">Completed Today</p>
               </div>
-              <div className="p-3 bg-green-100 rounded-lg">
-                <CheckCircle className="w-6 h-6 text-green-600" />
-              </div>
-            </div>
-            <div className="mt-4 text-sm text-gray-500">
-              Processing efficiency: 98.5%
-            </div>
-          </div>
-
-          <div className="bg-white rounded-xl p-6 shadow-sm border">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-2xl font-bold text-gray-900">{analyticsData.pendingApproval}</p>
-                <p className="text-sm text-gray-500">Pending Approval</p>
-              </div>
-              <div className="p-3 bg-orange-100 rounded-lg">
-                <Clock className="w-6 h-6 text-orange-600" />
+              <div className="p-2 sm:p-3 bg-green-100 rounded-lg mt-2 sm:mt-0 w-fit">
+                <CheckCircle className="w-4 h-4 sm:w-6 sm:h-6 text-green-600" />
               </div>
             </div>
-            <div className="mt-4 text-sm text-gray-500">
-              Avg. processing time: 2.3 days
+            <div className="mt-3 sm:mt-4 text-xs sm:text-sm text-gray-500">
+              <span className="hidden sm:inline">Processing efficiency: </span>98.5%
             </div>
           </div>
 
-          <div className="bg-white rounded-xl p-6 shadow-sm border">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-2xl font-bold text-gray-900">{analyticsData.certificatesIssued.toLocaleString()}</p>
-                <p className="text-sm text-gray-500">Certificates Issued</p>
+          <div className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-sm border">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between">
+              <div className="min-w-0">
+                <p className="text-lg sm:text-2xl font-bold text-gray-900">{analyticsData.pendingApproval}</p>
+                <p className="text-xs sm:text-sm text-gray-500">Pending Approval</p>
               </div>
-              <div className="p-3 bg-purple-100 rounded-lg">
-                <Printer className="w-6 h-6 text-purple-600" />
+              <div className="p-2 sm:p-3 bg-orange-100 rounded-lg mt-2 sm:mt-0 w-fit">
+                <Clock className="w-4 h-4 sm:w-6 sm:h-6 text-orange-600" />
               </div>
             </div>
-            <div className="mt-4 text-sm text-gray-500">
-              Digital certificates: 87%
+            <div className="mt-3 sm:mt-4 text-xs sm:text-sm text-gray-500">
+              <span className="hidden sm:inline">Avg. processing time: </span>2.3 days
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-sm border">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between">
+              <div className="min-w-0">
+                <p className="text-lg sm:text-2xl font-bold text-gray-900">{analyticsData.certificatesIssued.toLocaleString()}</p>
+                <p className="text-xs sm:text-sm text-gray-500">Certificates Issued</p>
+              </div>
+              <div className="p-2 sm:p-3 bg-purple-100 rounded-lg mt-2 sm:mt-0 w-fit">
+                <Printer className="w-4 h-4 sm:w-6 sm:h-6 text-purple-600" />
+              </div>
+            </div>
+            <div className="mt-3 sm:mt-4 text-xs sm:text-sm text-gray-500">
+              <span className="hidden sm:inline">Digital certificates: </span>87%
             </div>
           </div>
         </div>
 
         {/* Charts Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-white rounded-xl p-6 shadow-sm border">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-lg font-semibold text-gray-900">Weekly Registration Volume</h3>
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6">
+          <div className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-sm border">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 sm:mb-6 gap-3">
+              <h3 className="text-base sm:text-lg font-semibold text-gray-900">Weekly Registration Volume</h3>
               <select 
                 value={selectedPeriod}
                 onChange={(e) => setSelectedPeriod(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-green-500 focus:border-transparent w-full sm:w-auto"
               >
                 <option value="week">This Week</option>
                 <option value="month">This Month</option>
                 <option value="year">This Year</option>
               </select>
             </div>
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               {analyticsData.weeklyStats.map((stat) => (
                 <div key={stat.day} className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600 w-12">{stat.day}</span>
-                  <div className="flex-1 mx-4">
-                    <div className="w-full bg-gray-200 rounded-full h-2">
+                  <span className="text-xs sm:text-sm text-gray-600 w-8 sm:w-12">{stat.day}</span>
+                  <div className="flex-1 mx-2 sm:mx-4">
+                    <div className="w-full bg-gray-200 rounded-full h-1.5 sm:h-2">
                       <div 
-                        className="bg-green-600 h-2 rounded-full transition-all duration-500" 
+                        className="bg-green-600 h-1.5 sm:h-2 rounded-full transition-all duration-500" 
                         style={{ width: `${(stat.registrations / 50) * 100}%` }}
                       ></div>
                     </div>
                   </div>
-                  <span className="text-sm font-medium text-gray-900 w-8 text-right">{stat.registrations}</span>
+                  <span className="text-xs sm:text-sm font-medium text-gray-900 w-6 sm:w-8 text-right">{stat.registrations}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          <div className="bg-white rounded-xl p-6 shadow-sm border">
-            <h3 className="text-lg font-semibold text-gray-900 mb-6">Registration Status Distribution</h3>
-            <div className="space-y-4">
+          <div className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-sm border">
+            <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-4 sm:mb-6">Registration Status Distribution</h3>
+            <div className="space-y-3 sm:space-y-4">
               <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-3">
-                  <div className="w-4 h-4 bg-green-500 rounded-full"></div>
-                  <span className="text-sm text-gray-600">Completed</span>
+                <div className="flex items-center space-x-2 sm:space-x-3">
+                  <div className="w-3 h-3 sm:w-4 sm:h-4 bg-green-500 rounded-full"></div>
+                  <span className="text-xs sm:text-sm text-gray-600">Completed</span>
                 </div>
-                <span className="text-sm font-medium">75%</span>
+                <span className="text-xs sm:text-sm font-medium">75%</span>
               </div>
               <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-3">
-                  <div className="w-4 h-4 bg-blue-500 rounded-full"></div>
-                  <span className="text-sm text-gray-600">Certificates Issued</span>
+                <div className="flex items-center space-x-2 sm:space-x-3">
+                  <div className="w-3 h-3 sm:w-4 sm:h-4 bg-blue-500 rounded-full"></div>
+                  <span className="text-xs sm:text-sm text-gray-600">Certificates Issued</span>
                 </div>
-                <span className="text-sm font-medium">20%</span>
+                <span className="text-xs sm:text-sm font-medium">20%</span>
               </div>
               <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-3">
-                  <div className="w-4 h-4 bg-orange-500 rounded-full"></div>
-                  <span className="text-sm text-gray-600">Pending Approval</span>
+                <div className="flex items-center space-x-2 sm:space-x-3">
+                  <div className="w-3 h-3 sm:w-4 sm:h-4 bg-orange-500 rounded-full"></div>
+                  <span className="text-xs sm:text-sm text-gray-600">Pending Approval</span>
                 </div>
-                <span className="text-sm font-medium">5%</span>
+                <span className="text-xs sm:text-sm font-medium">5%</span>
               </div>
             </div>
           </div>
         </div>
 
         {/* Search and Filter */}
-        <div className="bg-white rounded-xl p-6 shadow-sm border">
-          <div className="flex flex-col lg:flex-row gap-4">
-            <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+        <div className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-6 shadow-sm border">
+          <div className="flex flex-col gap-4">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 sm:w-5 sm:h-5" />
               <input
                 type="text"
                 placeholder="Search by child name, registration number, or parent names..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full pl-9 sm:pl-10 pr-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm sm:text-base"
               />
             </div>
-            <div className="flex gap-4">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm sm:text-base"
               >
                 <option value="all">All Status</option>
                 <option value="completed">Completed</option>
@@ -300,28 +300,90 @@ export default function RegistryDashboard() {
               <select
                 value={dateRange}
                 onChange={(e) => setDateRange(e.target.value)}
-                className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="px-3 sm:px-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm sm:text-base"
               >
                 <option value="all">All Dates</option>
                 <option value="today">Today</option>
                 <option value="week">This Week</option>
                 <option value="month">This Month</option>
               </select>
-              <button className="px-4 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors flex items-center space-x-2">
+              <button className="px-3 sm:px-4 py-2.5 sm:py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors flex items-center justify-center space-x-2 text-sm sm:text-base">
                 <Download className="w-4 h-4" />
-                <span className="hidden sm:inline">Export</span>
+                <span>Export</span>
               </button>
             </div>
           </div>
         </div>
 
-        {/* Birth Records Table */}
-        <div className="bg-white rounded-xl shadow-sm border overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-200">
-            <h2 className="text-xl font-bold text-gray-900">Birth Registration Records</h2>
+        {/* Birth Records */}
+        <div className="bg-white rounded-lg sm:rounded-xl shadow-sm border overflow-hidden">
+          <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200">
+            <h2 className="text-lg sm:text-xl font-bold text-gray-900">Birth Registration Records</h2>
           </div>
           
-          <div className="overflow-x-auto">
+          {/* Mobile Card View */}
+          <div className="block lg:hidden">
+            {filteredRecords.length > 0 ? (
+              <div className="divide-y divide-gray-200">
+                {filteredRecords.map((record) => (
+                  <div key={record.id} className="p-4 hover:bg-gray-50">
+                    <div className="flex items-start justify-between mb-2">
+                      <div className="min-w-0 flex-1">
+                        <h3 className="text-sm font-medium text-gray-900 truncate">{record.childName}</h3>
+                        <p className="text-xs text-gray-500 truncate">{record.registrationNumber}</p>
+                      </div>
+                      <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border shrink-0 ml-2 ${getStatusColor(record.status)}`}>
+                        {getStatusIcon(record.status)}
+                        <span className="ml-1">{getStatusText(record.status)}</span>
+                      </span>
+                    </div>
+                    
+                    <div className="space-y-1 text-xs text-gray-600 mb-3">
+                      <div>Parents: {record.parentNames}</div>
+                      <div>Born: {new Date(record.dateOfBirth).toLocaleDateString()}</div>
+                      <div className="flex items-center">
+                        <MapPin className="w-3 h-3 mr-1 shrink-0" />
+                        <span className="truncate">{record.placeOfBirth}</span>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center justify-between">
+                      <div className="text-xs text-gray-500">
+                        Registered: {new Date(record.dateRegistered).toLocaleDateString()}
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <button className="text-green-600 hover:text-green-900 p-1">
+                          <Eye className="w-4 h-4" />
+                        </button>
+                        <button className="text-blue-600 hover:text-blue-900 p-1">
+                          <Edit3 className="w-4 h-4" />
+                        </button>
+                        {!record.certificateIssued && record.status === 'completed' && (
+                          <button className="text-purple-600 hover:text-purple-900 p-1">
+                            <Printer className="w-4 h-4" />
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-12">
+                <FileText className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-lg font-medium text-gray-900 mb-2">No records found</h3>
+                <p className="text-gray-500 text-sm px-4">
+                  {searchTerm || statusFilter !== 'all'
+                    ? 'Try adjusting your search or filter criteria.'
+                    : 'No birth registration records available.'
+                  }
+                </p>
+              </div>
+            )}
+          </div>
+
+          {/* Desktop Table View */}
+          <div className="hidden lg:block overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-50">
                 <tr>
@@ -394,20 +456,20 @@ export default function RegistryDashboard() {
                 ))}
               </tbody>
             </table>
+            
+            {filteredRecords.length === 0 && (
+              <div className="text-center py-12">
+                <FileText className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-lg font-medium text-gray-900 mb-2">No records found</h3>
+                <p className="text-gray-500">
+                  {searchTerm || statusFilter !== 'all'
+                    ? 'Try adjusting your search or filter criteria.'
+                    : 'No birth registration records available.'
+                  }
+                </p>
+              </div>
+            )}
           </div>
-          
-          {filteredRecords.length === 0 && (
-            <div className="text-center py-12">
-              <FileText className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">No records found</h3>
-              <p className="text-gray-500">
-                {searchTerm || statusFilter !== 'all'
-                  ? 'Try adjusting your search or filter criteria.'
-                  : 'No birth registration records available.'
-                }
-              </p>
-            </div>
-          )}
         </div>
       </div>
     </Layout>

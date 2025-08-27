@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './components/Login';
 import HealthWorkerDashboard from './components/dashboards/HealthWorkerDashboard';
@@ -13,17 +13,41 @@ function AppRoutes() {
     return <Login />;
   }
 
+  // 🔑 Role-based route mapping
+  const roleRoutes: Record<string, string> = {
+    health_worker: '/health-worker',
+    registry_staff: '/registry',
+    parent: '/parent',
+  };
+
+  const roleComponents: Record<string, JSX.Element> = {
+    health_worker: <HealthWorkerDashboard />,
+    registry_staff: <RegistryDashboard />,
+    parent: <ParentDashboard />,
+  };
+
   return (
     <Routes>
-      <Route path="/" element={
-        user?.role === 'health_worker' ? <Navigate to="/health-worker" replace /> :
-        user?.role === 'registry_staff' ? <Navigate to="/registry" replace /> :
-        user?.role === 'parent' ? <Navigate to="/parent" replace /> :
-        <Navigate to="/login" replace />
-      } />
-      <Route path="/health-worker" element={user?.role === 'health_worker' ? <HealthWorkerDashboard /> : <Navigate to="/" replace />} />
-      <Route path="/registry" element={user?.role === 'registry_staff' ? <RegistryDashboard /> : <Navigate to="/" replace />} />
-      <Route path="/parent" element={user?.role === 'parent' ? <ParentDashboard /> : <Navigate to="/" replace />} />
+      {/* Default redirect based on role */}
+      <Route
+        path="/"
+        element={
+          user?.role && roleRoutes[user.role]
+            ? <Navigate to={roleRoutes[user.role]} replace />
+            : <Navigate to="/login" replace />
+        }
+      />
+
+      {/* Role-specific dashboards */}
+      {Object.entries(roleComponents).map(([role, component]) => (
+        <Route
+          key={role}
+          path={roleRoutes[role]}
+          element={user?.role === role ? component : <Navigate to="/" replace />}
+        />
+      ))}
+
+      {/* Catch-all */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
@@ -33,7 +57,7 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-blue-500">
           <AppRoutes />
         </div>
       </Router>
