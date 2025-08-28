@@ -20,6 +20,8 @@ import {
   QrCode,
   Download,
   RefreshCw,
+  Menu,
+  X,
 } from "lucide-react";
 import Layout from "../Layout";
 import BirthCaptureForm from "../forms/BirthCaptureForm";
@@ -51,6 +53,7 @@ export default function HealthWorkerDashboard() {
   const [birthRecords, setBirthRecords] =
     useState<BirthRecord[]>(mockBirthRecords);
   const [isOffline] = useState(false); // Mock offline state
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   const filteredRecords = birthRecords.filter((record) => {
     const matchesSearch =
@@ -202,157 +205,181 @@ export default function HealthWorkerDashboard() {
       title="Health Worker Dashboard"
       subtitle="Birth registration at point of delivery"
     >
-      <div className="space-y-8">
-        {/* Header with Offline Indicator */}
-        <div className="bg-gradient-to-r from-teal-600 to-blue-600 rounded-2xl p-6 text-white">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold mb-2">
+      <div className="space-y-6">
+        {/* Mobile-Optimized Header */}
+        <div className="bg-gradient-to-r from-teal-600 to-blue-600 rounded-xl p-4 sm:p-6 text-white">
+          <div className="flex flex-col space-y-4 sm:flex-row sm:items-center sm:justify-between sm:space-y-0">
+            <div className="flex-1">
+              <h1 className="text-xl sm:text-2xl font-bold mb-1 sm:mb-2">
                 Birth Registration System
               </h1>
-              <p className="text-teal-100">
+              <p className="text-sm sm:text-base text-teal-100">
                 Immediate capture and progressive completion
               </p>
             </div>
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center justify-between sm:justify-end space-x-3 sm:space-x-4">
               <OfflineIndicator
                 pendingSyncCount={pendingSyncCount}
                 onSync={handleSync}
               />
               <button
                 onClick={() => setShowBirthCapture(true)}
-                className="bg-white/20 hover:bg-white/30 text-white px-6 py-3 rounded-lg font-medium transition-colors flex items-center space-x-2"
+                className="bg-white/20 hover:bg-white/30 text-white px-4 py-2 sm:px-6 sm:py-3 rounded-lg font-medium transition-colors flex items-center space-x-2"
               >
-                <Plus className="w-5 h-5" />
-                <span>Record Birth</span>
+                <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
+                <span className="text-sm sm:text-base">Record Birth</span>
               </button>
             </div>
           </div>
         </div>
 
-        {/* Quick Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="bg-white rounded-xl p-6 shadow-sm border">
+        {/* Mobile-Responsive Quick Stats */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+          <div className="bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 lg:p-6 shadow-sm border">
             <div className="flex items-center">
-              <div className="p-3 bg-blue-100 rounded-lg">
-                <Baby className="w-6 h-6 text-blue-600" />
+              <div className="p-2 sm:p-3 bg-blue-100 rounded-lg">
+                <Baby className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-blue-600" />
               </div>
-              <div className="ml-4">
-                <p className="text-2xl font-bold text-gray-900">
+              <div className="ml-2 sm:ml-3 lg:ml-4 min-w-0 flex-1">
+                <p className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 truncate">
                   {
                     birthRecords.filter((r) => r.stage === "immediate_capture")
                       .length
                   }
                 </p>
-                <p className="text-sm text-gray-500">Births Today</p>
+                <p className="text-xs sm:text-sm text-gray-500">Births Today</p>
               </div>
             </div>
-            <div className="mt-4 flex items-center text-sm">
-              <TrendingUp className="w-4 h-4 text-blue-500 mr-1" />
+            <div className="mt-2 sm:mt-3 lg:mt-4 flex items-center text-xs sm:text-sm">
+              <TrendingUp className="w-3 h-3 sm:w-4 sm:h-4 text-blue-500 mr-1" />
               <span className="text-blue-600 font-medium">+3</span>
-              <span className="text-gray-500 ml-1">this shift</span>
+              <span className="text-gray-500 ml-1 truncate">this shift</span>
             </div>
           </div>
 
-          <div className="bg-white rounded-xl p-6 shadow-sm border">
+          <div className="bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 lg:p-6 shadow-sm border">
             <div className="flex items-center">
-              <div className="p-3 bg-purple-100 rounded-lg">
-                <QrCode className="w-6 h-6 text-purple-600" />
+              <div className="p-2 sm:p-3 bg-purple-100 rounded-lg">
+                <QrCode className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-purple-600" />
               </div>
-              <div className="ml-4">
-                <p className="text-2xl font-bold text-gray-900">
+              <div className="ml-2 sm:ml-3 lg:ml-4 min-w-0 flex-1">
+                <p className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 truncate">
                   {
                     birthRecords.filter((r) => r.stage === "pre_registration")
                       .length
                   }
                 </p>
-                <p className="text-sm text-gray-500">Provisional IDs</p>
+                <p className="text-xs sm:text-sm text-gray-500">Provisional IDs</p>
               </div>
             </div>
-            <div className="mt-4 text-sm text-gray-500">
-              Generated and linked to health records
+            <div className="mt-2 sm:mt-3 lg:mt-4 text-xs sm:text-sm text-gray-500">
+              Generated and linked
             </div>
           </div>
 
-          <div className="bg-white rounded-xl p-6 shadow-sm border">
+          <div className="bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 lg:p-6 shadow-sm border">
             <div className="flex items-center">
-              <div className="p-3 bg-teal-100 rounded-lg">
-                <Heart className="w-6 h-6 text-teal-600" />
+              <div className="p-2 sm:p-3 bg-teal-100 rounded-lg">
+                <Heart className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-teal-600" />
               </div>
-              <div className="ml-4">
-                <p className="text-2xl font-bold text-gray-900">
+              <div className="ml-2 sm:ml-3 lg:ml-4 min-w-0 flex-1">
+                <p className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 truncate">
                   {
                     birthRecords.filter((r) => r.stage === "health_integration")
                       .length
                   }
                 </p>
-                <p className="text-sm text-gray-500">Health Integration</p>
+                <p className="text-xs sm:text-sm text-gray-500">Health Integration</p>
               </div>
             </div>
-            <div className="mt-4 text-sm text-gray-500">
-              Progressive completion during visits
+            <div className="mt-2 sm:mt-3 lg:mt-4 text-xs sm:text-sm text-gray-500">
+              Progressive completion
             </div>
           </div>
 
-          <div className="bg-white rounded-xl p-6 shadow-sm border">
+          <div className="bg-white rounded-lg sm:rounded-xl p-3 sm:p-4 lg:p-6 shadow-sm border">
             <div className="flex items-center">
-              <div className="p-3 bg-orange-100 rounded-lg">
-                <WifiOff className="w-6 h-6 text-orange-600" />
+              <div className="p-2 sm:p-3 bg-orange-100 rounded-lg">
+                <WifiOff className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-orange-600" />
               </div>
-              <div className="ml-4">
-                <p className="text-2xl font-bold text-gray-900">
+              <div className="ml-2 sm:ml-3 lg:ml-4 min-w-0 flex-1">
+                <p className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-900 truncate">
                   {pendingSyncCount}
                 </p>
-                <p className="text-sm text-gray-500">Pending Sync</p>
+                <p className="text-xs sm:text-sm text-gray-500">Pending Sync</p>
               </div>
             </div>
-            <div className="mt-4 text-sm text-gray-500">
-              Stored locally, will sync when online
+            <div className="mt-2 sm:mt-3 lg:mt-4 text-xs sm:text-sm text-gray-500">
+              Stored locally
             </div>
           </div>
         </div>
 
-        {/* Search and Filter */}
-        <div className="bg-white rounded-xl p-6 shadow-sm border">
-          <div className="flex flex-col lg:flex-row gap-4">
-            <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+        {/* Mobile-Responsive Search and Filter */}
+        <div className="bg-white rounded-xl p-4 sm:p-6 shadow-sm border">
+          <div className="space-y-4">
+            {/* Search Bar */}
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4 sm:w-5 sm:h-5" />
               <input
                 type="text"
                 placeholder="Search by child name, mother name, or provisional ID..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                className="w-full pl-9 sm:pl-10 pr-4 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent text-sm sm:text-base"
               />
             </div>
-            <div className="flex gap-4">
-              <select
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value)}
-                className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+            
+            {/* Mobile Filter Toggle */}
+            <div className="flex items-center justify-between sm:hidden">
+              <button
+                onClick={() => setShowMobileFilters(!showMobileFilters)}
+                className="flex items-center space-x-2 px-3 py-2 bg-gray-100 rounded-lg text-gray-700"
               >
-                <option value="all">All Status</option>
-                <option value="draft">Draft</option>
-                <option value="provisional">Provisional</option>
-                <option value="verified">Verified</option>
-                <option value="completed">Completed</option>
-                <option value="requires_info">Requires Info</option>
-              </select>
+                <Filter className="w-4 h-4" />
+                <span className="text-sm">Filters</span>
+                {showMobileFilters ? (
+                  <X className="w-4 h-4" />
+                ) : (
+                  <Menu className="w-4 h-4" />
+                )}
+              </button>
+              <span className="text-sm text-gray-500">
+                {filteredRecords.length} records
+              </span>
+            </div>
+
+            {/* Filter Options */}
+            <div className={`${showMobileFilters ? 'block' : 'hidden'} sm:block`}>
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                <select
+                  value={statusFilter}
+                  onChange={(e) => setStatusFilter(e.target.value)}
+                  className="w-full sm:w-auto px-3 py-2.5 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent text-sm sm:text-base"
+                >
+                  <option value="all">All Status</option>
+                  <option value="draft">Draft</option>
+                  <option value="provisional">Provisional</option>
+                  <option value="verified">Verified</option>
+                  <option value="completed">Completed</option>
+                  <option value="requires_info">Requires Info</option>
+                </select>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Birth Records */}
         <div className="space-y-4">
-          <h2 className="text-xl font-bold text-gray-900">Birth Records</h2>
+          <h2 className="text-lg sm:text-xl font-bold text-gray-900">Birth Records</h2>
 
           {filteredRecords.length === 0 ? (
-            <div className="bg-white rounded-xl p-8 shadow-sm border text-center">
-              <Baby className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">
+            <div className="bg-white rounded-xl p-6 sm:p-8 shadow-sm border text-center">
+              <Baby className="w-10 h-10 sm:w-12 sm:h-12 text-gray-400 mx-auto mb-4" />
+              <h3 className="text-base sm:text-lg font-medium text-gray-900 mb-2">
                 No birth records found
               </h3>
-              <p className="text-gray-500 mb-6">
+              <p className="text-sm sm:text-base text-gray-500 mb-6">
                 {searchTerm || statusFilter !== "all"
                   ? "Try adjusting your search or filter criteria."
                   : "Start by recording a new birth at the point of delivery."}
@@ -365,203 +392,187 @@ export default function HealthWorkerDashboard() {
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-1 gap-6">
+            <div className="space-y-4">
               {filteredRecords.map((record) => (
                 <div
                   key={record.id}
-                  className="bg-white rounded-xl p-4 sm:p-5 md:p-6 shadow-sm border hover:shadow-md transition-shadow"
+                  className="bg-white rounded-lg sm:rounded-xl p-4 sm:p-5 md:p-6 shadow-sm border hover:shadow-md transition-shadow"
                 >
-                  <div className="flex flex-col lg:flex-row lg:items-center justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-start justify-between mb-4">
-                        <div>
-                          <h3 className="text-lg font-semibold text-gray-900 mb-1">
-                            {record.childName}
-                          </h3>
-                          <div className="flex items-center space-x-4 text-sm text-gray-500">
-                            <div className="flex items-center space-x-1">
-                              <Calendar className="w-4 h-4" />
-                              <span>
-                                Born:{" "}
-                                {new Date(
-                                  record.dateOfBirth
-                                ).toLocaleDateString()}{" "}
-                                at {record.timeOfBirth}
-                              </span>
-                            </div>
-                            <div className="flex items-center space-x-1">
-                              <MapPin className="w-4 h-4" />
-                              <span>{record.placeOfBirth}</span>
-                            </div>
-                          </div>
-                          <div className="flex items-center space-x-4 mt-2">
-                            {record.provisionalId && (
-                              <div className="text-sm text-purple-600 font-medium">
-                                Provisional ID: {record.provisionalId}
-                              </div>
-                            )}
-                            {record.registrationNumber && (
-                              <div className="text-sm text-green-600 font-medium">
-                                Registration #: {record.registrationNumber}
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <span
-                            className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${getStatusColor(
-                              record.stage
-                            )}`}
-                          >
-                            {record.stage
-                              .replace("_", " ")
-                              .replace(/\b\w/g, (l) => l.toUpperCase())}
-                          </span>
-                          <span
-                            className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${getStatusColor(
-                              record.status
-                            )}`}
-                          >
-                            {getStatusText(record.status)}
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Mother Information */}
-                      <div className="mb-4 text-sm text-gray-600">
-                        <div className="flex items-center space-x-4">
+                  {/* Mobile-First Layout */}
+                  <div className="space-y-4">
+                    {/* Header with Name and Status */}
+                    <div className="flex items-start justify-between">
+                      <div className="min-w-0 flex-1">
+                        <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-1 truncate">
+                          {record.childName}
+                        </h3>
+                        <div className="flex flex-col sm:flex-row sm:items-center space-y-1 sm:space-y-0 sm:space-x-4 text-xs sm:text-sm text-gray-500">
                           <div className="flex items-center space-x-1">
-                            <Users className="w-4 h-4" />
-                            <span>Mother: {record.motherName}</span>
-                          </div>
-                          <div className="flex items-center space-x-1">
-                            <Phone className="w-4 h-4" />
-                            <span>{record.contactPhone}</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Progress Bar */}
-                      <div className="mb-4">
-                        <div className="flex justify-between items-center mb-2">
-                          <span className="text-sm font-medium text-gray-700">
-                            Registration Progress
-                          </span>
-                          <span className="text-sm text-gray-500">
-                            {record.progress}%
-                          </span>
-                        </div>
-                        <div className="w-full bg-gray-200 rounded-full h-2">
-                          <div
-                            className="bg-teal-600 h-2 rounded-full transition-all duration-500"
-                            style={{ width: `${record.progress}%` }}
-                          ></div>
-                        </div>
-                        <div className="flex justify-between mt-2 text-xs text-gray-500">
-                          <span
-                            className={
-                              record.currentStep >= 1
-                                ? "text-teal-600 font-medium"
-                                : ""
-                            }
-                          >
-                            Immediate Capture
-                          </span>
-                          <span
-                            className={
-                              record.currentStep >= 2
-                                ? "text-teal-600 font-medium"
-                                : ""
-                            }
-                          >
-                            Pre-Registration
-                          </span>
-                          <span
-                            className={
-                              record.currentStep >= 3
-                                ? "text-teal-600 font-medium"
-                                : ""
-                            }
-                          >
-                            Health Integration
-                          </span>
-                          <span
-                            className={
-                              record.currentStep >= 4
-                                ? "text-teal-600 font-medium"
-                                : ""
-                            }
-                          >
-                            Civil Registration
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Actions */}
-                      <div className="flex items-center justify-between">
-                        <div className="text-sm text-gray-500">
-                          <div className="flex items-center space-x-4">
-                            <span>
-                              Captured:{" "}
-                              {new Date(
-                                record.birthCapturedDate
-                              ).toLocaleDateString()}
+                            <Calendar className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+                            <span className="truncate">
+                              Born: {new Date(record.dateOfBirth).toLocaleDateString()} at {record.timeOfBirth}
                             </span>
-                            <span>Physician: {record.attendingPhysician}</span>
-                            {record.healthRecordId && (
-                              <span>Health ID: {record.healthRecordId}</span>
-                            )}
                           </div>
-                        </div>
-                        <div className="flex items-center space-x-3">
-                          <button
-                            onClick={() => setSelectedRecord(record)}
-                            className="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center space-x-1"
-                          >
-                            <Eye className="w-4 h-4" />
-                            <span>View Details</span>
-                          </button>
-
-                          {record.stage === "health_integration" && (
-                            <button
-                              onClick={() => setShowHealthIntegration(record)}
-                              className="bg-teal-100 hover:bg-teal-200 text-teal-800 px-3 py-1 rounded text-sm font-medium transition-colors"
-                            >
-                              Complete Info
-                            </button>
-                          )}
-
-                          {record.qrCode && (
-                            <button className="bg-purple-100 hover:bg-purple-200 text-purple-800 px-3 py-1 rounded text-sm font-medium transition-colors flex items-center space-x-1">
-                              <QrCode className="w-3 h-3" />
-                              <span>QR Code</span>
-                            </button>
-                          )}
-
-                          {record.confirmationSlip && (
-                            <button className="bg-green-100 hover:bg-green-200 text-green-800 px-3 py-1 rounded text-sm font-medium transition-colors flex items-center space-x-1">
-                              <Download className="w-3 h-3" />
-                              <span>Slip</span>
-                            </button>
-                          )}
+                          <div className="flex items-center space-x-1">
+                            <MapPin className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+                            <span className="truncate">{record.placeOfBirth}</span>
+                          </div>
                         </div>
                       </div>
-
-                      {/* Required Information Notice */}
-                      {record.requiresInfo &&
-                        record.requiresInfo.length > 0 && (
-                          <div className="mt-4 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
-                            <p className="text-sm text-yellow-800">
-                              <span className="font-medium">
-                                Still needed:{" "}
-                              </span>
-                              {record.requiresInfo
-                                .map((info) => info.replace("_", " "))
-                                .join(", ")}
-                            </p>
-                          </div>
-                        )}
+                      <div className="flex flex-col space-y-1 ml-2">
+                        <span
+                          className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border whitespace-nowrap ${getStatusColor(
+                            record.stage
+                          )}`}
+                        >
+                          {record.stage
+                            .replace("_", " ")
+                            .replace(/\b\w/g, (l) => l.toUpperCase())}
+                        </span>
+                        <span
+                          className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium border whitespace-nowrap ${getStatusColor(
+                            record.status
+                          )}`}
+                        >
+                          {getStatusText(record.status)}
+                        </span>
+                      </div>
                     </div>
+
+                    {/* IDs */}
+                    <div className="flex flex-col sm:flex-row sm:items-center space-y-1 sm:space-y-0 sm:space-x-4">
+                      {record.provisionalId && (
+                        <div className="text-xs sm:text-sm text-purple-600 font-medium">
+                          Provisional ID: {record.provisionalId}
+                        </div>
+                      )}
+                      {record.registrationNumber && (
+                        <div className="text-xs sm:text-sm text-green-600 font-medium">
+                          Registration #: {record.registrationNumber}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Mother Information */}
+                    <div className="text-xs sm:text-sm text-gray-600">
+                      <div className="flex flex-col sm:flex-row sm:items-center space-y-1 sm:space-y-0 sm:space-x-4">
+                        <div className="flex items-center space-x-1">
+                          <Users className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+                          <span className="truncate">Mother: {record.motherName}</span>
+                        </div>
+                        <div className="flex items-center space-x-1">
+                          <Phone className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+                          <span>{record.contactPhone}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Progress Bar */}
+                    <div>
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-xs sm:text-sm font-medium text-gray-700">
+                          Registration Progress
+                        </span>
+                        <span className="text-xs sm:text-sm text-gray-500">
+                          {record.progress}%
+                        </span>
+                      </div>
+                      <div className="w-full bg-gray-200 rounded-full h-1.5 sm:h-2">
+                        <div
+                          className="bg-teal-600 h-1.5 sm:h-2 rounded-full transition-all duration-500"
+                          style={{ width: `${record.progress}%` }}
+                        ></div>
+                      </div>
+                      <div className="grid grid-cols-4 gap-1 mt-2 text-xs text-gray-500">
+                        <span
+                          className={`text-center truncate ${
+                            record.currentStep >= 1 ? "text-teal-600 font-medium" : ""
+                          }`}
+                        >
+                          Capture
+                        </span>
+                        <span
+                          className={`text-center truncate ${
+                            record.currentStep >= 2 ? "text-teal-600 font-medium" : ""
+                          }`}
+                        >
+                          Pre-Reg
+                        </span>
+                        <span
+                          className={`text-center truncate ${
+                            record.currentStep >= 3 ? "text-teal-600 font-medium" : ""
+                          }`}
+                        >
+                          Health
+                        </span>
+                        <span
+                          className={`text-center truncate ${
+                            record.currentStep >= 4 ? "text-teal-600 font-medium" : ""
+                          }`}
+                        >
+                          Civil
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Additional Info */}
+                    <div className="text-xs sm:text-sm text-gray-500">
+                      <div className="flex flex-col sm:flex-row sm:items-center space-y-1 sm:space-y-0 sm:space-x-4">
+                        <span className="truncate">
+                          Captured: {new Date(record.birthCapturedDate).toLocaleDateString()}
+                        </span>
+                        <span className="truncate">Physician: {record.attendingPhysician}</span>
+                        {record.healthRecordId && (
+                          <span className="truncate">Health ID: {record.healthRecordId}</span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Actions - Mobile Responsive */}
+                    <div className="flex flex-wrap items-center gap-2 pt-2 border-t">
+                      <button
+                        onClick={() => setSelectedRecord(record)}
+                        className="text-blue-600 hover:text-blue-800 text-xs sm:text-sm font-medium flex items-center space-x-1"
+                      >
+                        <Eye className="w-3 h-3 sm:w-4 sm:h-4" />
+                        <span>View Details</span>
+                      </button>
+
+                      {record.stage === "health_integration" && (
+                        <button
+                          onClick={() => setShowHealthIntegration(record)}
+                          className="bg-teal-100 hover:bg-teal-200 text-teal-800 px-2 py-1 rounded text-xs sm:text-sm font-medium transition-colors"
+                        >
+                          Complete Info
+                        </button>
+                      )}
+
+                      {record.qrCode && (
+                        <button className="bg-purple-100 hover:bg-purple-200 text-purple-800 px-2 py-1 rounded text-xs sm:text-sm font-medium transition-colors flex items-center space-x-1">
+                          <QrCode className="w-3 h-3" />
+                          <span>QR</span>
+                        </button>
+                      )}
+
+                      {record.confirmationSlip && (
+                        <button className="bg-green-100 hover:bg-green-200 text-green-800 px-2 py-1 rounded text-xs sm:text-sm font-medium transition-colors flex items-center space-x-1">
+                          <Download className="w-3 h-3" />
+                          <span>Slip</span>
+                        </button>
+                      )}
+                    </div>
+
+                    {/* Required Information Notice */}
+                    {record.requiresInfo && record.requiresInfo.length > 0 && (
+                      <div className="p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+                        <p className="text-xs sm:text-sm text-yellow-800">
+                          <span className="font-medium">Still needed: </span>
+                          {record.requiresInfo
+                            .map((info) => info.replace("_", " "))
+                            .join(", ")}
+                        </p>
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}
