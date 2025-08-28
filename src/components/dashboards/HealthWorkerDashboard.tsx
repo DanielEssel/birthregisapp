@@ -365,7 +365,7 @@ export default function HealthWorkerDashboard() {
               </button>
             </div>
           ) : (
-            <div className="grid sm:grid-cols-1 lg:grid-cols-1 gap-6 space-y-4">
+            <div className="grid grid-cols-1 gap-6">
               {filteredRecords.map((record) => (
                 <div
                   key={record.id}
@@ -410,17 +410,19 @@ export default function HealthWorkerDashboard() {
                         <div className="flex items-center space-x-2">
                           <span
                             className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${getStatusColor(
+                              record.stage
+                            )}`}
+                          >
+                            {record.stage
+                              .replace("_", " ")
+                              .replace(/\b\w/g, (l) => l.toUpperCase())}
+                          </span>
+                          <span
+                            className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border ${getStatusColor(
                               record.status
                             )}`}
                           >
                             {getStatusText(record.status)}
-                          </span>
-                          <span
-                            className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium ${getSyncStatusColor(
-                              record.syncStatus
-                            )}`}
-                          >
-                            {getSyncStatusText(record.syncStatus)}
                           </span>
                         </div>
                       </div>
